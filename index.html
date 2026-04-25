@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Socwork Band | Official Booking</title>
+  <link rel="icon" type="image/x-icon" href="favicon.jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+      --accent: #ffffff;
+      --border-color: rgba(255, 255, 255, 0.15);
+      --glass-bg: rgba(10, 10, 12, 0.45); 
+    }
+    
+    body {
+      font-family: 'Prompt', sans-serif;
+      color: var(--text-main);
+      margin: 0;
+      padding: 50px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      background-image: url('https://lh3.googleusercontent.com/d/1_txwvvzzJROjg-vniYjnA_ADE1jpqeu9'); 
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%);
+      z-index: -1;
+    }
+
+    .form-wrapper {
+      background-color: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      max-width: 680px;
+      width: 100%;
+      padding: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+      border-radius: 16px;
+      animation: floatUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    @keyframes floatUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand-header { margin-bottom: 40px; text-align: center; }
+    .brand-header h1 { margin: 0; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; font-size: 28px; }
+    .brand-header p { color: var(--text-muted); font-size: 12px; letter-spacing: 2px; margin-top: 10px; text-transform: uppercase; }
+
+    .form-group { margin-bottom: 30px; }
+    label.title-label { display: block; margin-bottom: 8px; font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.7); letter-spacing: 1.5px; text-transform: uppercase; }
+    .input-container { position: relative; }
+
+    /* เพิ่ม textarea เข้ามารวมกลุ่มตกแต่ง */
+    input[type="text"], input[type="date"], input[type="time"], input[type="number"], input[type="tel"], textarea {
+      width: 100%; padding: 10px 0; background-color: transparent; border: none; border-bottom: 1px solid var(--border-color);
+      color: var(--text-main); font-family: 'Prompt', sans-serif; font-size: 15px; font-weight: 300; box-sizing: border-box; transition: border-color 0.4s ease;
+    }
+    textarea { resize: vertical; min-height: 40px; padding-top: 15px; }
+    input:focus, textarea:focus { outline: none; border-bottom: 1px solid var(--accent); }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.3); font-weight: 200; }
+
+    .radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-group label.pill {
+      padding: 8px 24px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); border-radius: 40px;
+      color: rgba(255,255,255,0.7); cursor: pointer; font-size: 13px; font-weight: 300; letter-spacing: 1px; transition: all 0.4s ease; backdrop-filter: blur(4px);
+    }
+    .radio-group input[type="radio"]:checked + label.pill { background-color: var(--text-main); color: #000; border-color: var(--text-main); font-weight: 500; box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); }
+    .radio-group label.pill:hover { background: rgba(255,255,255,0.1); color: var(--text-main); }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+    .time-range { display: flex; align-items: center; gap: 10px; }
+    .time-range span { color: rgba(255,255,255,0.4); font-weight: 300; font-size: 14px; }
+
+    button.submit-btn {
+      width: 100%; padding: 20px; background-color: transparent; color: var(--text-main); border: 1px solid var(--text-main);
+      border-radius: 40px; font-size: 13px; font-weight: 400; letter-spacing: 3px; text-transform: uppercase; font-family: 'Prompt', sans-serif;
+      cursor: pointer; margin-top: 40px; transition: all 0.4s ease; display: flex; justify-content: center; align-items: center;
+    }
+    button.submit-btn:hover { background-color: var(--text-main); color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+    button.submit-btn:disabled { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.2); cursor: not-allowed; box-shadow: none; }
+
+    .spinner { display: none; width: 16px; height: 16px; border: 1px solid rgba(255,255,255,0.2); border-left-color: var(--text-main); border-radius: 50%; animation: spin 1s linear infinite; margin-right: 12px; }
+    button.submit-btn:hover .spinner { border-left-color: #000; }
+    button.submit-btn:disabled .spinner { display: inline-block; border-left-color: rgba(255,255,255,0.5); }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    #message { text-align: center; margin-top: 20px; font-size: 12px; letter-spacing: 1px; display: none; padding: 15px; border-radius: 4px; animation: floatUp 0.5s ease; }
+    .success { color: #fff; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+    .error { color: #ff6b6b; background: rgba(255,107,107,0.1); border: 1px solid rgba(255,107,107,0.2); }
+
+    .contact-footer { margin-top: 40px; padding-top: 30px; border-top: 1px solid var(--border-color); text-align: center; }
+    .contact-footer p { font-size: 10px; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 12px; margin-top: 0; }
+    .social-links { display: flex; justify-content: center; align-items: center; gap: 15px; font-size: 13px; font-weight: 300; }
+    .social-links a { color: var(--text-main); text-decoration: none; letter-spacing: 1px; transition: color 0.3s; display: inline-flex; align-items: center; gap: 6px; }
+    .social-links a:hover { color: var(--text-muted); }
+    .social-links span { color: rgba(255,255,255,0.2); }
+
+    ::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; opacity: 0.6; transition: 0.3s; }
+    ::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+
+    @media (max-width: 600px) {
+      .grid-2 { grid-template-columns: 1fr; gap: 0; }
+      .form-wrapper { padding: 40px 20px; border-radius: 0; border: none; background: rgba(10, 10, 12, 0.7); }
+      .social-links { flex-direction: column; gap: 8px; }
+      .social-links span { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-wrapper">
+    <div class="brand-header">
+      <h1>Socwork Band</h1>
+      <p>Booking Request</p>
+    </div>
+
+    <form id="bookingForm">
+      
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="title-label">วันที่จัดงาน (DATE)</label>
+          <div class="input-container"><input type="date" name="bookingDate" required></div>
+        </div>
+        <div class="form-group">
+          <label class="title-label">ชื่องาน (EVENT NAME)</label>
+          <div class="input-container"><input type="text" name="eventName" placeholder="ระบุชื่องาน..." required></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="title-label">ชื่อผู้จ้าง / องค์กร (CLIENT)</label>
+        <div class="input-container"><input type="text" name="clientName" placeholder="ชื่อบริษัท หรือ ชื่อผู้จ้าง..." required></div>
+      </div>
+      
+      <div class="form-group">
+        <label class="title-label">ลักษณะผู้จ้าง (CLIENT TYPE)</label>
+        <div class="radio-group">
+          <input type="radio" id="type1" name="clientType" value="องค์กรภายนอก" required><label for="type1" class="pill">องค์กรภายนอก</label>
+          <input type="radio" id="type2" name="clientType" value="องค์กรภายใน"><label for="type2" class="pill">องค์กรภายใน</label>
+          <input type="radio" id="type3" name="clientType" value="บุคคลทั่วไป"><label for="type3" class="pill">บุคคลทั่วไป</label>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="title-label">รูปแบบการเล่น (PERFORMANCE FORMAT)</label>
+          <div class="radio-group">
+            <input type="radio" id="format1" name="playStyle" value="Folk" required><label for="format1" class="pill">Folk</label>
+            <input type="radio" id="format2" name="playStyle" value="Full Band"><label for="format2" class="pill">Full Band</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="title-label">แนวเพลง (MUSIC GENRE)</label>
+          <div class="input-container"><input type="text" name="musicGenre" placeholder="เช่น Pop, Rock, T-Pop..." required></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="title-label">เบอร์ติดต่อ (CONTACT)</label>
+          <div class="input-container"><input type="tel" name="contact" placeholder="08XXXXXXXX (ตัวเลข 10 หลัก)" pattern="[0-9]{10}" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required></div>
+        </div>
+        <div class="form-group">
+          <label class="title-label">สถานที่จัดงาน (LOCATION)</label>
+          <div class="input-container"><input type="text" name="location" placeholder="ระบุสถานที่ หรือ จังหวัด..." required></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="title-label">ระยะเวลาเล่น (SHOW TIME)</label>
+          <div class="input-container time-range">
+            <input type="time" id="playTimeStart" required>
+            <span>ถึง</span>
+            <input type="time" id="playTimeEnd" required>
+            <input type="hidden" name="playTime" id="playTimeCombined">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="title-label">งบประมาณ (BUDGET - THB)</label>
+          <div class="input-container"><input type="number" name="budget" placeholder="ระบุตัวเลข (ไม่บังคับ)"></div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="form-group">
+          <label class="title-label">วันที่ซาวด์เช็ค (SOUNDCHECK DATE)</label>
+          <div class="input-container"><input type="date" name="soundcheckDate" required></div>
+        </div>
+        <div class="form-group">
+          <label class="title-label">เวลาซาวด์เช็ค (SOUNDCHECK TIME)</label>
+          <div class="input-container time-range">
+            <input type="time" id="soundTimeStart" required>
+            <span>ถึง</span>
+            <input type="time" id="soundTimeEnd" required>
+            <input type="hidden" name="soundTime" id="soundTimeCombined">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="title-label">สวัสดิการ (BENEFITS)</label>
+        <div class="input-container"><input type="text" name="benefits" placeholder="อาหาร, ที่พัก, ค่าเดินทาง ฯลฯ"></div>
+      </div>
+
+      <div class="form-group">
+        <label class="title-label">บรีฟเพิ่มเติม / หมายเหตุ (ADDITIONAL BRIEF)</label>
+        <div class="input-container">
+          <textarea name="additionalBrief" rows="3" placeholder="รายละเอียดอื่นๆ ที่ต้องการแจ้งให้วงทราบ..."></textarea>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <div class="spinner"></div><span id="btnText">Submit Request</span>
+      </button>
+      <div id="message"></div>
+    </form>
+
+    <div class="contact-footer">
+      <p>CONTACT US</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/socworkband/" target="_blank">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          @socworkband
+        </a>
+        <span>|</span>
+        <a href="tel:0985865366">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          098-586-5366
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // อย่าลืม! ลิงก์ตรงนี้ถ้าเป็นลิงก์เก่าที่คุณใช้อยู่ให้เปลี่ยนกลับเป็นของคุณด้วยนะครับ (หรือถ้าอันนี้ใช่ของคุณแล้วก็ปล่อยผ่านได้เลย)
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz3ohx0Lz5NhB2MpnU1mKvtPoT0dKJzSGpqxdpeEBtRb_1kjbwctPTOqVM0FhwfI9gK/exec';
+
+    const form = document.getElementById('bookingForm');
+    const btn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const msgDiv = document.getElementById('message');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault(); 
+      
+      document.getElementById('playTimeCombined').value = document.getElementById('playTimeStart').value + ' - ' + document.getElementById('playTimeEnd').value;
+      document.getElementById('soundTimeCombined').value = document.getElementById('soundTimeStart').value + ' - ' + document.getElementById('soundTimeEnd').value;
+
+      btn.disabled = true; 
+      btnText.innerText = 'PROCESSING...'; 
+      msgDiv.style.display = 'none';
+
+      const formData = new FormData(form);
+
+      fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => response.text())
+        .then(result => {
+          if(result === 'success') {
+            msgDiv.innerHTML = 'YOUR REQUEST HAS BEEN SUBMITTED.'; 
+            msgDiv.className = 'success'; 
+            form.reset();
+          } else {
+            msgDiv.innerHTML = 'ERROR: UNKNOWN ERROR'; 
+            msgDiv.className = 'error';
+          }
+          msgDiv.style.display = 'block'; 
+          btn.disabled = false; 
+          btnText.innerText = 'SUBMIT REQUEST';
+        })
+        .catch(error => {
+          msgDiv.innerHTML = 'CONNECTION FAILED.'; 
+          msgDiv.className = 'error';
+          msgDiv.style.display = 'block'; 
+          btn.disabled = false; 
+          btnText.innerText = 'SUBMIT REQUEST';
+        });
+    });
+  </script>
+</body>
+</html>
